@@ -26780,7 +26780,15 @@ fabric.Image.filters.BaseFilter.fromObject = function(object, callback) {
         leftOffset = lineDiff;
       }
       if (direction === 'rtl') {
-        leftOffset -= lineDiff;
+        if (textAlign === 'right' || textAlign === 'justify'){
+          leftOffset -= lineDiff;
+        }
+        else if (textAlign === 'left') {
+          leftOffset = -lineDiff;
+        }
+        else if (textAlign === 'center') {
+          leftOffset = -lineDiff / 2;
+        }
       }
       return leftOffset;
     },
@@ -27899,7 +27907,17 @@ fabric.Image.filters.BaseFilter.fromObject = function(object, callback) {
         left: lineLeftOffset + (leftOffset > 0 ? leftOffset : 0),
       };
       if (this.direction === 'rtl') {
-        boundaries.left *= -1;
+        if (this.direction === 'rtl') {
+          if (this.textAlign === 'right' || this.textAlign === 'justify'){
+            boundaries.left *= -1;
+          }
+          else if (this.textAlign === 'left') {
+            boundaries.left = lineLeftOffset - (leftOffset > 0 ? leftOffset : 0);
+          }
+          else if (this.textAlign === 'center') {
+            boundaries.left = lineLeftOffset - (leftOffset > 0 ? leftOffset : 0);
+          }
+        }
       }
       this.cursorOffsetCache = boundaries;
       return this.cursorOffsetCache;
@@ -27988,7 +28006,15 @@ fabric.Image.filters.BaseFilter.fromObject = function(object, callback) {
           ctx.fillStyle = this.selectionColor;
         }
         if (this.direction === 'rtl') {
-          drawStart = this.width - drawStart - drawWidth;
+          if (this.textAlign === 'right' || this.textAlign === 'justify'){
+            drawStart = this.width - drawStart - drawWidth;
+          }
+          else if (this.textAlign === 'left') {
+            drawStart = boundaries.left + lineOffset - drawWidth;
+          }
+          else if (this.textAlign === 'center') {
+            drawStart = boundaries.left + lineOffset - drawWidth;
+          }
         }
         ctx.fillRect(
           drawStart,
