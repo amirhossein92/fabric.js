@@ -467,10 +467,10 @@
             drawStart = this.width - drawStart - drawWidth;
           }
           else if (this.textAlign === 'left') {
-            drawStart = boundaries.left + lineOffset - drawWidth;
+            drawStart = boundaries.left + lineOffset - boxEnd;
           }
           else if (this.textAlign === 'center') {
-            drawStart = boundaries.left + lineOffset - drawWidth;
+            drawStart = boundaries.left + lineOffset - boxEnd;
           }
         }
         ctx.fillRect(
